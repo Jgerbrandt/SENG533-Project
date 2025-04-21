@@ -1,0 +1,11 @@
+Description,Count,Sum
+Time spent on MongoDB one_kb_30_false write operations,222573.0,18.176876587909646
+Time spent on MongoDB ten_kb_30_false write operations,44866.0,9.835739499307238
+Time spent on MongoDB twenty_kb_30_false write operations,21100.0,7.3694206938380376
+Time spent on MongoDB fifty_kb_30_false write operations,10713.0,5.54469911637716
+Time spent on MongoDB one_hundred_kb_30_false write operations,5641.0,4.708552368218079
+Time spent on MongoDB one_kb_30_true write operations,214578.0,17.44818225200288
+Time spent on MongoDB ten_kb_30_true write operations,44262.0,9.901641983538866
+Time spent on MongoDB twenty_kb_30_true write operations,20784.0,7.440200443845242
+Time spent on MongoDB fifty_kb_30_true write operations,10698.0,5.526380538241938
+Time spent on MongoDB one_hundred_kb_30_true write operations,5699.0,4.468627360416576
