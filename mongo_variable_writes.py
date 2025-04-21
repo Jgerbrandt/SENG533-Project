@@ -119,6 +119,49 @@ def test_batch_writes_mongo(timer, collection, size_kb, duration_seconds, batch_
     except Exception as e:
         print(f"Failed to insert batch: {e}")
 
+def populate_collection_with_data(collection, num_documents=1000):
+    # Helper function to populate a table with random data to query
+    batch = []
+    for i in range(num_documents):
+        # generate random data with varying sizes and types
+        document = {
+            "name": generate_random_string(random.randint(5, 50)),
+            "age": random.randint(18, 80),
+            "is_active": random.choice([True, False]),
+            "tags": [generate_random_string(10) for _ in range(random.randint(1, 10))],
+            "metadata": {
+                "key": generate_random_string(20),
+                "value": generate_random_string(20)
+            },
+            "created_at": time.time() - random.randint(0, 31536000),
+            "data": generate_random_string(random.randint(100, 1024))
+        }
+        batch.append(document)
+
+        if len(batch) == 100:
+            collection.insert_many(batch)
+            batch = []
+
+    if batch:
+        collection.insert_many(batch)
+
+def test_query_performance_mongo(timer, collection, duration_seconds, complex_query=False):
+    # test query operations with variable duration and complexity
+    start_time = time.time()
+    try:
+        while time.time() - start_time < duration_seconds:
+            if complex_query:
+                query = {"is_active": True, "age": {"$gte": 30}}
+                projection = {"_id": 0, "name": 1, "age": 1, "tags": 1}
+                with timer.time():
+                    results = list(collection.find(query, projection).sort("age", -1).limit(10))
+            else:
+                query = {"is_active": True}
+                with timer.time():
+                    result = collection.find_one(query)
+    except Exception as e:
+        print(f"Failed to execute query: {e}")
+
 def main():
     start_http_server(8000)
     print("Prometheus metrics available at http://localhost:8000/metrics")
