@@ -75,7 +75,7 @@ def test_variable_data_size_mongo(timer, counter, collection, size_kb, duration_
                 }
             else:
                 # single dtype
-                large_data = {"name": generate_random_string(data_size), "age": random.randint(18, 80)}
+                large_data = {"age": random.randint(18, 80)}
 
             with timer.time():
                 collection.insert_one(large_data)
