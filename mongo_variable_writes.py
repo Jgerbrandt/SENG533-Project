@@ -50,7 +50,7 @@ one_hundred_kb_60_true_time = Summary(
 def generate_random_string(size):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=size))
 
-def test_variable_data_size_mongo(timer, counter, collection, size_kb, duration_seconds, multiple_types=False):
+def test_variable_data_size_mongo(timer, collection, size_kb, duration_seconds, multiple_types=False):
     # Test write operations with variable data sizes, duration, and data types
     start_time = time.time()
     try:
@@ -79,11 +79,10 @@ def test_variable_data_size_mongo(timer, counter, collection, size_kb, duration_
 
             with timer.time():
                 collection.insert_one(large_data)
-                counter.inc()  # increment throughput counter
     except Exception as e:
         print(f"Failed to insert document {e}")
 
-def test_batch_writes_mongo(timer, counter, collection, size_kb, duration_seconds, batch_size, multiple_types=False):
+def test_batch_writes_mongo(timer, collection, size_kb, duration_seconds, batch_size, multiple_types=False):
     # test batch write operations with variable data sizes, duration, and data types.
     start_time = time.time()
     try:
@@ -117,7 +116,6 @@ def test_batch_writes_mongo(timer, counter, collection, size_kb, duration_second
             # batch insert
             with timer.time():
                 collection.insert_many(batch)
-                counter.inc(len(batch))  # increment throughput counter by the batch size
     except Exception as e:
         print(f"Failed to insert batch: {e}")
 
@@ -145,61 +143,19 @@ def main():
     twenty_kb_60_true = db["write8"]
     fifty_kb_60_true = db["write9"]
     one_hundred_kb_60_true = db["write10"]
-
-    one_kb_60_false_counter = Counter(
-    'mongo_one_kb_60_false_throughput_total',
-    'Total number of MongoDB one_kb_60_false write operations'
-    )
-
-    ten_kb_60_false_counter = Counter(
-    'mongo_ten_kb_60_false_throughput_total',
-    'Total number of MongoDB ten_kb_60_false write operations'
-    )
-    twenty_kb_60_false_counter = Counter(
-    'mongo_twenty_kb_60_false_throughput_total',
-    'Total number of MongoDB twenty_kb_60_false write operations'
-    )
-    fifty_kb_60_false_counter = Counter(
-    'mongo_fifty_kb_60_false_throughput_total',
-    'Total number of MongoDB fifty_kb_60_false write operations'
-    )
-    one_hundred_kb_60_false_counter = Counter(
-    'mongo_one_hundred_kb_60_false_throughput_total',
-    'Total number of MongoDB one_hundred_kb_60_false write operations'
-    )
-    one_kb_60_true_counter = Counter(
-    'mongo_one_kb_60_true_throughput_total',
-    'Total number of MongoDB one_kb_60_true write operations'
-    )
-    ten_kb_60_true_counter = Counter(
-    'mongo_ten_kb_60_true_throughput_total',
-    'Total number of MongoDB ten_kb_60_true write operations'
-    )
-    twenty_kb_60_true_counter = Counter(
-    'mongo_twenty_kb_60_true_throughput_total',
-    'Total number of MongoDB twenty_kb_60_true write operations'
-    )
-    fifty_kb_60_true_counter = Counter(
-    'mongo_fifty_kb_60_true_throughput_total',
-    'Total number of MongoDB fifty_kb_60_true write operations'
-    )
-    one_hundred_kb_60_true_counter = Counter(
-    'mongo_one_hundred_kb_60_true_throughput_total',
-    'Total number of MongoDB one_hundred_kb_60_true write operations'
-    )
     
     # tests with different data sizes and types for 60 seconds
-    test_variable_data_size_mongo(one_kb_60_false_time, one_kb_60_false_counter, one_kb_60_false, size_kb=1, duration_seconds=60, multiple_types=False)
-    test_variable_data_size_mongo(ten_kb_60_false_time, ten_kb_60_false_counter, ten_kb_60_false, size_kb=10, duration_seconds=60, multiple_types=False)
-    test_variable_data_size_mongo(twenty_kb_60_false_time, twenty_kb_60_false_counter,  twenty_kb_60_false, size_kb=20, duration_seconds=60, multiple_types=False)
-    test_variable_data_size_mongo(fifty_kb_60_false_time, fifty_kb_60_false_counter, fifty_kb_60_false, size_kb=50, duration_seconds=60, multiple_types=False)
-    test_variable_data_size_mongo(one_hundred_kb_60_false_time, one_hundred_kb_60_false_counter, one_hundred_kb_60_false, size_kb=100, duration_seconds=60, multiple_types=False)
+    test_variable_data_size_mongo(one_kb_60_false_time, one_kb_60_false, size_kb=1, duration_seconds=60, multiple_types=False)
+    test_variable_data_size_mongo(ten_kb_60_false_time, ten_kb_60_false, size_kb=10, duration_seconds=60, multiple_types=False)
+    test_variable_data_size_mongo(twenty_kb_60_false_time,  twenty_kb_60_false, size_kb=20, duration_seconds=60, multiple_types=False)
+    test_variable_data_size_mongo(fifty_kb_60_false_time, fifty_kb_60_false, size_kb=50, duration_seconds=60, multiple_types=False)
+    test_variable_data_size_mongo(one_hundred_kb_60_false_time, one_hundred_kb_60_false, size_kb=100, duration_seconds=60, multiple_types=False)
 
-    test_variable_data_size_mongo(one_kb_60_true_time, one_kb_60_true_counter, one_kb_60_true, size_kb=1, duration_seconds=60, multiple_types=True)
-    test_variable_data_size_mongo(ten_kb_60_true_time, ten_kb_60_true_counter, ten_kb_60_true, size_kb=10, duration_seconds=60, multiple_types=True)
-    test_variable_data_size_mongo(twenty_kb_60_true_time, twenty_kb_60_true_counter, twenty_kb_60_true, size_kb=20, duration_seconds=60, multiple_types=True)
-    test_variable_data_size_mongo(fifty_kb_60_true_time, fifty_kb_60_true_counter, fifty_kb_60_true, size_kb=50, duration_seconds=60, multiple_types=True)
-    test_variable_data_size_mongo(one_hundred_kb_60_true_time, one_hundred_kb_60_true_counter, one_hundred_kb_60_true, size_kb=100, duration_seconds=60, multiple_types=True)
+    test_variable_data_size_mongo(one_kb_60_true_time, one_kb_60_true, size_kb=1, duration_seconds=60, multiple_types=True)
+    test_variable_data_size_mongo(ten_kb_60_true_time, ten_kb_60_true, size_kb=10, duration_seconds=60, multiple_types=True)
+    test_variable_data_size_mongo(twenty_kb_60_true_time, twenty_kb_60_true, size_kb=20, duration_seconds=60, multiple_types=True)
+    test_variable_data_size_mongo(fifty_kb_60_true_time, fifty_kb_60_true, size_kb=50, duration_seconds=60, multiple_types=True)
+    test_variable_data_size_mongo(one_hundred_kb_60_true_time, one_hundred_kb_60_true, size_kb=100, duration_seconds=60, multiple_types=True)
 
 if __name__ == "__main__":
     main()
