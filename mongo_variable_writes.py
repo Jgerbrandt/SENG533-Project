@@ -83,6 +83,44 @@ def test_variable_data_size_mongo(timer, counter, collection, size_kb, duration_
     except Exception as e:
         print(f"Failed to insert document {e}")
 
+def test_batch_writes_mongo(timer, counter, collection, size_kb, duration_seconds, batch_size, multiple_types=False):
+    # test batch write operations with variable data sizes, duration, and data types.
+    start_time = time.time()
+    try:
+        while time.time() - start_time < duration_seconds:
+            batch = []
+            for _ in range(batch_size):
+                data_size = size_kb * 1024
+                # multiple dtypes
+                if multiple_types:
+                    other_fields_size = (
+                        4 +  # size of age
+                        1 +  # is_active bool
+                        5 * 10 +  # tags
+                        40  # metadata
+                    )
+                    # rest of the size goes to name
+                    name_size = max(0, data_size - other_fields_size)
+                    large_data = {
+                        "name": generate_random_string(name_size),
+                        "age": random.randint(18, 80),
+                        "is_active": random.choice([True, False]),
+                        "tags": [generate_random_string(10) for _ in range(5)],
+                        "metadata": {"key": generate_random_string(20), "value": generate_random_string(20)}
+                    }
+                else:
+                    # single dtype
+                    large_data = {"age": random.randint(18, 80)}
+
+                batch.append(large_data)
+
+            # batch insert
+            with timer.time():
+                collection.insert_many(batch)
+                counter.inc(len(batch))  # increment throughput counter by the batch size
+    except Exception as e:
+        print(f"Failed to insert batch: {e}")
+
 def main():
     start_http_server(8000)
     print("Prometheus metrics available at http://localhost:8000/metrics")
