@@ -1,0 +1,7 @@
+Description,Count,Sum
+Time spent on MongoDB 30_seconds_false query operations,292978.0,29.414475993369706
+Time spent on MongoDB 30_seconds_true query operations,31786.0,29.80079152563121
+Time spent on MongoDB 60_seconds_false query operations,642355.0,58.76950468600262
+Time spent on MongoDB 60_seconds_true query operations,30543.0,59.61375854280777
+Time spent on MongoDB 300_seconds_false query operations,3242396.0,293.89478290092666
+Time spent on MongoDB 300_seconds_true query operations,147668.0,298.14189150801394
