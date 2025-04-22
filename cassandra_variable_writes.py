@@ -30,6 +30,12 @@ for i in range(1, 11):
             metadata map<text, text>
         )
     """)
+    session.execute(f"""
+        CREATE INDEX IF NOT EXISTS ON write{i} (is_active)
+    """)
+    session.execute(f"""
+        CREATE INDEX IF NOT EXISTS ON write{i} (age)
+    """)
 
 
 def define_metrics(prefix):
@@ -54,6 +60,53 @@ metric_sets = {
 
 def generate_random_string(size):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=size))
+
+def test_query_performance_cassandra(timer, table_name, duration_seconds, complex_query=False):
+    start_time = time.time()
+    try:
+        while time.time() - start_time < duration_seconds:
+            if complex_query:
+                # complex query with indexed fields
+                query = f"""
+                    SELECT name, age, tags FROM {table_name}
+                    WHERE is_active = True AND age >= 30
+                    LIMIT 10
+                """
+                with timer.time():
+                    rows = session.execute(query)
+                    results = list(rows)
+            else:
+                # simple query using indexed field
+                query = f"""
+                    SELECT * FROM {table_name}
+                    WHERE is_active = True
+                    LIMIT 1
+                """
+                with timer.time():
+                    result = session.execute(query).one()
+    except Exception as e:
+        print(f"Failed to execute query: {e}")
+
+def populate_table_with_data(table_name, num_records=1000):
+    for _ in range(num_records):
+        id = uuid.uuid4()
+        name = generate_random_string(random.randint(5, 50))
+        age = random.randint(18, 80)
+        is_active = random.choice([True, False])
+        tags = [generate_random_string(10) for _ in range(random.randint(1, 10))]
+        metadata = {"key": generate_random_string(20), "value": generate_random_string(20)}
+        created_at = time.time() - random.randint(0, 31536000)
+        data = generate_random_string(random.randint(100, 1024))
+
+        query = f"""
+            INSERT INTO {table_name} (id, name, age, is_active, tags, metadata, created_at, data)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        """
+        values = (id, name, age, is_active, tags, metadata, created_at, data)
+        session.execute(query, values)
+
+
+
 
 
 def test_variable_data_size_cassandra(timer, counter, table_name, size_kb, duration_seconds, multiple_types=False):
@@ -100,6 +153,10 @@ def test_variable_data_size_cassandra(timer, counter, table_name, size_kb, durat
 def main():
     start_http_server(8000)
     print("Prometheus metrics available at http://localhost:8000/metrics")
+
+    #populate_table_with_data("write6", num_records=1000)
+    #query_metric = Summary('cassandra_query_duration_seconds', 'Time spent on Cassandra query operations')
+    #test_query_performance_cassandra(query_metric, "write6", 60, complex_query=True)
 
     # Execute all test cases
     test_variable_data_size_cassandra(metric_sets["one_kb_60_false"]["time"], metric_sets["one_kb_60_false"]["counter"], "write1", 1, 60, multiple_types=False)
