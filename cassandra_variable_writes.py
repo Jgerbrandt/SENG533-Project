@@ -40,8 +40,7 @@ for i in range(1, 11):
 
 def define_metrics(prefix):
     return {
-        "time": Summary(f'cassandra_{prefix}_duration_seconds', f'Time spent on Cassandra {prefix} write operations'),
-        "counter": Counter(f'cassandra_{prefix}_throughput_total', f'Total number of Cassandra {prefix} write operations')
+        "time": Summary(f'cassandra_{prefix}_duration_seconds', f'Time spent on Cassandra {prefix} write operations')
     }
 
 metric_sets = {
@@ -104,6 +103,54 @@ def populate_table_with_data(table_name, num_records=1000):
         """
         values = (id, name, age, is_active, tags, metadata, created_at, data)
         session.execute(query, values)
+
+def test_batch_writes_cassandra(timer, counter, table_name, size_kb, duration_seconds, batch_size, multiple_types=False):
+    start_time = time.time()
+    try:
+        while time.time() - start_time < duration_seconds:
+            batch_query = "BEGIN UNLOGGED BATCH "
+            batch_values = []
+            for _ in range(batch_size):
+                data_size = size_kb * 1024
+                id = uuid.uuid4()
+
+                if multiple_types:
+                    other_fields_size = (
+                        4 +  # age
+                        1 +  # is_active
+                        5 * 10 +  # tags
+                        40  # metadata
+                    )
+                    name_size = max(0, data_size - other_fields_size)
+                    name = generate_random_string(name_size)
+                    age = random.randint(18, 80)
+                    is_active = random.choice([True, False])
+                    tags = [generate_random_string(10) for _ in range(5)]
+                    metadata = {"key": generate_random_string(20), "value": generate_random_string(20)}
+
+                    query = f"""
+                        INSERT INTO {table_name} (id, name, age, is_active, tags, metadata)
+                        VALUES (%s, %s, %s, %s, %s, %s);
+                    """
+                    batch_query += query
+                    batch_values.extend([id, name, age, is_active, tags, metadata])
+                else:
+                    name = generate_random_string(data_size)
+                    query = f"""
+                        INSERT INTO {table_name} (id, name)
+                        VALUES (%s, %s);
+                    """
+                    batch_query += query
+                    batch_values.extend([id, name])
+
+            batch_query += "APPLY BATCH"
+
+            with timer.time():
+                session.execute(batch_query, batch_values)
+                counter.inc(batch_size)
+    except Exception as e:
+        print(f"Failed to insert batch into {table_name}: {e}")
+
 
 
 
