@@ -1,0 +1,88 @@
+# HELP python_gc_objects_collected_total Objects collected during gc
+# TYPE python_gc_objects_collected_total counter
+python_gc_objects_collected_total{generation="0"} 5.78466e+06
+python_gc_objects_collected_total{generation="1"} 699934.0
+python_gc_objects_collected_total{generation="2"} 18259.0
+# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
+# TYPE python_gc_objects_uncollectable_total counter
+python_gc_objects_uncollectable_total{generation="0"} 0.0
+python_gc_objects_uncollectable_total{generation="1"} 0.0
+python_gc_objects_uncollectable_total{generation="2"} 0.0
+# HELP python_gc_collections_total Number of times this generation was collected
+# TYPE python_gc_collections_total counter
+python_gc_collections_total{generation="0"} 10098.0
+python_gc_collections_total{generation="1"} 918.0
+python_gc_collections_total{generation="2"} 6.0
+# HELP python_info Python platform information
+# TYPE python_info gauge
+python_info{implementation="CPython",major="3",minor="11",patchlevel="12",version="3.11.12"} 1.0
+# HELP cassandra_one_kb_30_false_duration_seconds Time spent on Cassandra one_kb_30_false write operations
+# TYPE cassandra_one_kb_30_false_duration_seconds summary
+cassandra_one_kb_30_false_duration_seconds_count 96001.0
+cassandra_one_kb_30_false_duration_seconds_sum 23.94868655980099
+# HELP cassandra_one_kb_30_false_duration_seconds_created Time spent on Cassandra one_kb_30_false write operations
+# TYPE cassandra_one_kb_30_false_duration_seconds_created gauge
+cassandra_one_kb_30_false_duration_seconds_created 1.7453811525018702e+09
+# HELP cassandra_ten_kb_30_false_duration_seconds Time spent on Cassandra ten_kb_30_false write operations
+# TYPE cassandra_ten_kb_30_false_duration_seconds summary
+cassandra_ten_kb_30_false_duration_seconds_count 31227.0
+cassandra_ten_kb_30_false_duration_seconds_sum 13.749840692267753
+# HELP cassandra_ten_kb_30_false_duration_seconds_created Time spent on Cassandra ten_kb_30_false write operations
+# TYPE cassandra_ten_kb_30_false_duration_seconds_created gauge
+cassandra_ten_kb_30_false_duration_seconds_created 1.745381152501886e+09
+# HELP cassandra_twenty_kb_30_false_duration_seconds Time spent on Cassandra twenty_kb_30_false write operations
+# TYPE cassandra_twenty_kb_30_false_duration_seconds summary
+cassandra_twenty_kb_30_false_duration_seconds_count 19810.0
+cassandra_twenty_kb_30_false_duration_seconds_sum 10.373807371244766
+# HELP cassandra_twenty_kb_30_false_duration_seconds_created Time spent on Cassandra twenty_kb_30_false write operations
+# TYPE cassandra_twenty_kb_30_false_duration_seconds_created gauge
+cassandra_twenty_kb_30_false_duration_seconds_created 1.745381152501892e+09
+# HELP cassandra_fifty_kb_30_false_duration_seconds Time spent on Cassandra fifty_kb_30_false write operations
+# TYPE cassandra_fifty_kb_30_false_duration_seconds summary
+cassandra_fifty_kb_30_false_duration_seconds_count 7729.0
+cassandra_fifty_kb_30_false_duration_seconds_sum 10.211451982730068
+# HELP cassandra_fifty_kb_30_false_duration_seconds_created Time spent on Cassandra fifty_kb_30_false write operations
+# TYPE cassandra_fifty_kb_30_false_duration_seconds_created gauge
+cassandra_fifty_kb_30_false_duration_seconds_created 1.745381152501899e+09
+# HELP cassandra_one_hundred_kb_30_false_duration_seconds Time spent on Cassandra one_hundred_kb_30_false write operations
+# TYPE cassandra_one_hundred_kb_30_false_duration_seconds summary
+cassandra_one_hundred_kb_30_false_duration_seconds_count 6431.0
+cassandra_one_hundred_kb_30_false_duration_seconds_sum 6.3946068797959015
+# HELP cassandra_one_hundred_kb_30_false_duration_seconds_created Time spent on Cassandra one_hundred_kb_30_false write operations
+# TYPE cassandra_one_hundred_kb_30_false_duration_seconds_created gauge
+cassandra_one_hundred_kb_30_false_duration_seconds_created 1.745381152501906e+09
+# HELP cassandra_one_kb_30_true_duration_seconds Time spent on Cassandra one_kb_30_true write operations
+# TYPE cassandra_one_kb_30_true_duration_seconds summary
+cassandra_one_kb_30_true_duration_seconds_count 140154.0
+cassandra_one_kb_30_true_duration_seconds_sum 22.401768892421387
+# HELP cassandra_one_kb_30_true_duration_seconds_created Time spent on Cassandra one_kb_30_true write operations
+# TYPE cassandra_one_kb_30_true_duration_seconds_created gauge
+cassandra_one_kb_30_true_duration_seconds_created 1.74538115250191e+09
+# HELP cassandra_ten_kb_30_true_duration_seconds Time spent on Cassandra ten_kb_30_true write operations
+# TYPE cassandra_ten_kb_30_true_duration_seconds summary
+cassandra_ten_kb_30_true_duration_seconds_count 38494.0
+cassandra_ten_kb_30_true_duration_seconds_sum 14.48077551939059
+# HELP cassandra_ten_kb_30_true_duration_seconds_created Time spent on Cassandra ten_kb_30_true write operations
+# TYPE cassandra_ten_kb_30_true_duration_seconds_created gauge
+cassandra_ten_kb_30_true_duration_seconds_created 1.745381152501915e+09
+# HELP cassandra_twenty_kb_30_true_duration_seconds Time spent on Cassandra twenty_kb_30_true write operations
+# TYPE cassandra_twenty_kb_30_true_duration_seconds summary
+cassandra_twenty_kb_30_true_duration_seconds_count 24962.0
+cassandra_twenty_kb_30_true_duration_seconds_sum 11.07348559924867
+# HELP cassandra_twenty_kb_30_true_duration_seconds_created Time spent on Cassandra twenty_kb_30_true write operations
+# TYPE cassandra_twenty_kb_30_true_duration_seconds_created gauge
+cassandra_twenty_kb_30_true_duration_seconds_created 1.745381152501926e+09
+# HELP cassandra_fifty_kb_30_true_duration_seconds Time spent on Cassandra fifty_kb_30_true write operations
+# TYPE cassandra_fifty_kb_30_true_duration_seconds summary
+cassandra_fifty_kb_30_true_duration_seconds_count 11700.0
+cassandra_fifty_kb_30_true_duration_seconds_sum 8.115416657645255
+# HELP cassandra_fifty_kb_30_true_duration_seconds_created Time spent on Cassandra fifty_kb_30_true write operations
+# TYPE cassandra_fifty_kb_30_true_duration_seconds_created gauge
+cassandra_fifty_kb_30_true_duration_seconds_created 1.745381152501933e+09
+# HELP cassandra_one_hundred_kb_30_true_duration_seconds Time spent on Cassandra one_hundred_kb_30_true write operations
+# TYPE cassandra_one_hundred_kb_30_true_duration_seconds summary
+cassandra_one_hundred_kb_30_true_duration_seconds_count 6015.0
+cassandra_one_hundred_kb_30_true_duration_seconds_sum 7.488965872209519
+# HELP cassandra_one_hundred_kb_30_true_duration_seconds_created Time spent on Cassandra one_hundred_kb_30_true write operations
+# TYPE cassandra_one_hundred_kb_30_true_duration_seconds_created gauge
+cassandra_one_hundred_kb_30_true_duration_seconds_created 1.7453811525019379e+09
