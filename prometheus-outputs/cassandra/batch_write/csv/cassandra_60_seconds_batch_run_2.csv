@@ -1,0 +1,11 @@
+Description,Count,Sum
+Time spent on Cassandra one_kb_100_batch_false write operations,8003.0,25.45536876609549
+Time spent on Cassandra ten_kb_100_batch_false write operations,1438.0,6.3413812182843685
+Time spent on Cassandra twenty_kb_100_batch_false write operations,769.0,5.120066088507883
+Time spent on Cassandra fifty_kb_100_batch_false write operations,324.0,3.913250246201642
+Time spent on Cassandra one_hundred_kb_100_batch_false write operations,164.0,3.5625786668388173
+Time spent on Cassandra one_kb_100_batch_true write operations,6600.0,28.631864684983157
+Time spent on Cassandra ten_kb_100_batch_true write operations,1351.0,7.653170985751785
+Time spent on Cassandra twenty_100_batch_true write operations,674.0,4.801485088770278
+Time spent on Cassandra fifty_kb_100_batch_true write operations,0.0,0.0
+Time spent on Cassandra one_hundred_kb_100_batch_true write operations,0.0,0.0

@@ -12,7 +12,7 @@ def parse_prometheus_metrics(file_path):
                 if match:
                     current_metric = match.group(1)
                     metrics[current_metric] = {"description": match.group(2), "count": None, "sum": None}
-            
+
             elif current_metric and not line.startswith("#"):
                 if "count" in line:
                     match = re.match(r"(\S+)\s+([\d\.e\+]+)", line)
@@ -35,8 +35,8 @@ def save_metrics_to_csv(metrics, output_file):
             writer.writerow([details["description"], details["count"], details["sum"]])
 
 def main():
-    input_file = "/Users/jessegerbrandt/SENG533-Project/prometheus-outputs/mongo/mongo_60_seconds_multi_dtype_run_1.txt"
-    output_csv = input_file.replace(".txt", ".csv")
+    input_file = "./prometheus-outputs/cassandra/batch_write/txt/cassandra_300_seconds_batch_run_1.txt"
+    output_csv = input_file.replace("txt", "csv")
 
     metrics = parse_prometheus_metrics(input_file)
 
