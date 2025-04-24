@@ -1,0 +1,7 @@
+Description,Count,Sum
+Time spent on Cassandra 30_second_false_query write operations,149429.0,29.685302821104415
+Time spent on Cassandra 30_second_true_query write operations,164699.0,29.658952476573177
+Time spent on Cassandra 60_second_false_query write operations,294942.0,59.370602401089855
+Time spent on Cassandra 60_second_true_query write operations,323879.0,59.34416014049202
+Time spent on Cassandra 300_second_false_query write operations,1503376.0,296.9312569673639
+Time spent on Cassandra 300_second_true_query write operations,494353.0,298.79028162080795
